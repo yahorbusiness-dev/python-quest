@@ -1,4 +1,4 @@
-# Python Quest
+# The Pyth Adventure
 
 Ett gratis 8-bitarsspel på svenska där man lär sig programmera Python från noll.
 31 uppdrag i fyra världar: Ängen, Den onda skogen, Enhörningslandet och Mars.

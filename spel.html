@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Python Quest</title>
+<title>The Pyth Adventure</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 <style>
@@ -223,7 +223,7 @@ textarea:focus{border-color:var(--accent)}
 </head>
 <body>
 
-<h1>PYTHON QUEST</h1>
+<h1>THE PYTH ADVENTURE</h1>
 <div id="hud">
   <span>VÄRLD: <b id="hWorld">ÄNGEN</b></span>
   <span>POÄNG: <b id="hScore">0</b></span>
@@ -255,7 +255,7 @@ textarea:focus{border-color:var(--accent)}
 
   <div class="overlay show" id="intro">
     <div class="inner">
-      <h2>PYTHON QUEST</h2>
+      <h2>THE PYTH ADVENTURE</h2>
       <canvas class="bigSprite" id="introSprite" width="12" height="15"></canvas>
       <p>Hjälp hjälten att lära sig programmera i <b>Python</b>!</p>
       <p>Gå runt med <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> och ställ dig vid datorn som blinkar. Tryck <kbd>E</kbd> för att öppna uppdraget.</p>
@@ -3509,7 +3509,7 @@ function updateCelebrate(){
 }
 function showFinalWin(){
   const nm=esc(heroName());
-  showPanel('<h2>DU KLARADE PYTHON QUEST!</h2><canvas class="bigSprite" id="pSprite" width="12" height="15"></canvas>'+
+  showPanel('<h2>DU KLARADE THE PYTH ADVENTURE!</h2><canvas class="bigSprite" id="pSprite" width="12" height="15"></canvas>'+
     '<p class="px" style="font-size:11px">POÄNG: <span style="color:var(--accent)">'+state.score+'</span> / '+MAXSCORE+'</p>'+
     '<p>Grattis, <b>'+nm+'</b>! Du har lärt dig Python från noll, besegrat Buggdraken, byggt en raket, räddat Mars och slagit Zorblax i en kodduell!</p>'+
     '<p>Det här kan du nu:</p><div class="learned">'+TASKS.filter(T=>!T.boss&&!T.duel).map(T=>'<div>✓ '+T.concept+'</div>').join('')+'</div>'+
