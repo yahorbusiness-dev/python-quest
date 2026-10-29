@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Pyth Adventure – lär dig Python i ett 8-bitarsäventyr</title>
-<meta name="description" content="Lär dig programmera Python från noll i ett gratis 8-bitarsspel på svenska. 31 uppdrag i fyra världar, direkt i webbläsaren.">
+<meta name="description" content="Lär dig programmera Python från noll i ett gratis 8-bitarsspel på svenska. Allt börjar på en lugn äng. Vart stigen leder får du ta reda på själv.">
 <meta property="og:title" content="The Pyth Adventure">
-<meta property="og:description" content="Lär dig Python från noll i ett 8-bitarsäventyr. 31 uppdrag, fyra världar, en drake och en kodduell på Mars.">
+<meta property="og:description" content="Lär dig Python från noll i ett 8-bitarsäventyr. 31 uppdrag, en låst dörr och ett äventyr som ingen kan förutse.">
 <meta property="og:image" content="bilder/angen.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 15' shape-rendering='crispEdges'><rect x='4' y='0' width='4' height='1' fill='%23c89820'/><rect x='1' y='1' width='10' height='6' fill='%23f8d848'/><rect x='3' y='4' width='6' height='4' fill='%23f8c8a0'/><rect x='4' y='5' width='1' height='1' fill='%23202030'/><rect x='7' y='5' width='1' height='1' fill='%23202030'/><rect x='2' y='8' width='8' height='4' fill='%233070e0'/><rect x='3' y='12' width='6' height='2' fill='%23283068'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -94,6 +94,12 @@ section{padding:64px 0}
 .chip{font-family:'Courier New',monospace;font-size:15px;background:var(--code);color:var(--codetext);padding:3px 8px;border:2px solid var(--shadow)}
 .boss{margin-top:12px;font-size:20px}
 .boss b{color:var(--red)}
+.mystery{position:relative;overflow:hidden;background:#05050f;border-bottom:3px solid var(--shadow);aspect-ratio:4/3}
+.mystery.wide{aspect-ratio:1076/520;border:4px solid var(--shadow)}
+.mystery img{width:100%;height:100%;object-fit:cover;filter:blur(18px) brightness(.35) saturate(.7);transform:scale(1.2);border:0!important}
+.mystery .q{position:absolute;inset:0;display:grid;place-items:center;font-family:'Press Start 2P',monospace;font-size:clamp(40px,7vw,72px);color:var(--accent);text-shadow:5px 5px 0 #000;animation:qpulse 2.4s ease-in-out infinite}
+@keyframes qpulse{0%,100%{opacity:.55;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+.world.locked h3{color:var(--muted)}
 
 /* så funkar det */
 .how{display:grid;grid-template-columns:1fr 1.1fr;gap:36px;align-items:start}
@@ -158,7 +164,7 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;
     <div>
       <div class="kicker">GRATIS · PÅ SVENSKA · I WEBBLÄSAREN</div>
       <h1>Lär dig <span class="hl">Python</span> i ett 8&#8209;bitars&shy;äventyr</h1>
-      <p class="lead">Börja från noll med din första <code>print()</code> och sluta med att besegra en drake, bygga en raket och vinna en kodduell mot en alien på Mars. Allt med riktig Python-kod.</p>
+      <p class="lead">Allt börjar på en lugn äng, med en blinkande dator och din första <code>print()</code>. Men längst bort på stigen står en dörr som ingen har öppnat på länge. Vad som väntar bakom den? Det får du ta reda på själv – med riktig Python-kod.</p>
       <div class="ctas">
         <a class="btn" href="spel.html">▶ SPELA NU</a>
         <a class="btn ghost" href="#konto" id="heroAcc">☁ LOGGA IN</a>
@@ -170,7 +176,7 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;
   <div class="wrap">
     <div class="stats">
       <div class="stat"><b>31</b><span>uppdrag</span></div>
-      <div class="stat"><b>4</b><span>världar att utforska</span></div>
+      <div class="stat"><b>?</b><span>världar bakom dörren</span></div>
       <div class="stat"><b>0</b><span>saker att installera</span></div>
       <div class="stat"><b>100%</b><span>riktig Python-kod</span></div>
     </div>
@@ -179,7 +185,7 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;
   <section id="lar">
     <div class="wrap">
       <h2 class="sec-title">VAD DU LÄR DIG</h2>
-      <p class="sec-sub">Varje värld bygger på den förra. Du lär dig en sak i taget och använder den direkt i ett uppdrag.</p>
+      <p class="sec-sub">Du lär dig en sak i taget och använder den direkt i ett uppdrag. Den första världen kan du se här. Resten låser du upp själv – om du vågar.</p>
       <div class="worlds">
         <article class="world">
           <img src="bilder/angen.png" width="952" height="712" alt="Ängen med datorer, dammar och stigar." loading="lazy">
@@ -190,33 +196,33 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;
             <div class="chips"><span class="chip">print()</span><span class="chip">matte</span><span class="chip">variabler</span><span class="chip">input()</span><span class="chip">if / else</span><span class="chip">listor</span><span class="chip">for-loopar</span><span class="chip">def</span></div>
           </div>
         </article>
-        <article class="world">
-          <img src="bilder/skogen.png" width="952" height="712" alt="Den onda skogen med magikern Merlo och den röda Buggdraken." loading="lazy">
+        <article class="world locked">
+          <div class="mystery"><img src="bilder/skogen.png" width="952" height="712" alt="" aria-hidden="true" loading="lazy"><span class="q">?</span></div>
           <div class="body">
-            <span class="tag" style="background:var(--magic)">VÄRLD 2 · UPPDRAG 11–20</span>
-            <h3>Den onda skogen</h3>
-            <p>Magikern Merlo lär dig loopar och funktioner som skickar tillbaka svar.</p>
-            <div class="chips"><span class="chip">while</span><span class="chip">elif</span><span class="chip">and / or</span><span class="chip">append()</span><span class="chip">len()</span><span class="chip">parametrar</span><span class="chip">return</span><span class="chip">f-strängar</span></div>
-            <p class="boss">Boss: <b>Buggdraken</b>, som besegras med en while-loop.</p>
+            <span class="tag" style="background:var(--magic)">VÄRLD 2 · 🔒 LÅST</span>
+            <h3>Bakom dörren</h3>
+            <p>Där stigen tar slut står en dörr som ingen har öppnat på länge. Någon där inne vet mer än han säger. Och längst in... andas något.</p>
+            <div class="chips"><span class="chip">while</span><span class="chip">elif</span><span class="chip">and / or</span><span class="chip">append()</span><span class="chip">len()</span><span class="chip">return</span><span class="chip">f-strängar</span></div>
+            <p class="boss">Varning: <b>något vaktar nyckeln.</b></p>
           </div>
         </article>
-        <article class="world">
-          <img src="bilder/enhorningar.png" width="952" height="712" alt="Enhörningslandet med betande enhörningar och en raket som byggs på startplattan." loading="lazy">
+        <article class="world locked">
+          <div class="mystery"><img src="bilder/enhorningar.png" width="952" height="712" alt="" aria-hidden="true" loading="lazy"><span class="q">?</span></div>
           <div class="body">
-            <span class="tag" style="background:var(--fairy)">VÄRLD 3 · UPPDRAG 21–25</span>
-            <h3>Enhörningslandet</h3>
-            <p>Med fen Pixi skriver du ett riktigt program på över 20 rader i fem steg, och bygger en raket som flyger.</p>
-            <div class="chips"><span class="chip">ordböcker</span><span class="chip">lista + ordbok</span><span class="chip">funktion med villkor</span><span class="chip">while … and …</span></div>
+            <span class="tag" style="background:var(--fairy)">VÄRLD 3 · 🔒 LÅST</span>
+            <h3>???</h3>
+            <p>En gyllene grind som ingen gått igenom på hundra år. Här skriver du ditt längsta program hittills – och bygger något stort, bit för bit.</p>
+            <div class="chips"><span class="chip">ordböcker</span><span class="chip">lista + ordbok</span><span class="chip">funktioner med villkor</span><span class="chip">while … and …</span></div>
           </div>
         </article>
-        <article class="world">
-          <img src="bilder/mars.png" width="952" height="712" alt="Mars med tre gröna aliens, ett rymdskepp och kodlåsta gömställen." loading="lazy">
+        <article class="world locked">
+          <div class="mystery"><img src="bilder/mars.png" width="952" height="712" alt="" aria-hidden="true" loading="lazy"><span class="q">?</span></div>
           <div class="body">
-            <span class="tag" style="background:var(--mars)">VÄRLD 4 · UPPDRAG 26–31</span>
-            <h3>Mars</h3>
-            <p>Hjälp tre gröna aliens att hitta sin stjärnkristall bakom kodlåsta gömställen.</p>
-            <div class="chips"><span class="chip">% (rest)</span><span class="chip">in</span><span class="chip">range med steg</span><span class="chip">"#" * i</span><span class="chip">sum / min / max</span></div>
-            <p class="boss">Final: en <b>kodduell på tid</b> mot den lila tjuven Zorblax.</p>
+            <span class="tag" style="background:var(--mars)">VÄRLD ? · 🔒 ???</span>
+            <h3>Det ingen vet</h3>
+            <p>Ingen karta visar vägen hit. Inte ens du vet hur du ska ta dig dit. Bara att något saknas – och att någon har tagit det.</p>
+            <div class="chips"><span class="chip">% (rest)</span><span class="chip">in</span><span class="chip">range med steg</span><span class="chip">sum / min / max</span></div>
+            <p class="boss">Och sist av allt: <b>klockan tickar.</b></p>
           </div>
         </article>
       </div>
@@ -231,10 +237,10 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;
         <div class="steps">
           <div class="step"><div class="n">1</div><div><h3>LÄS OCH SE ETT EXEMPEL</h3><p>Varje uppdrag förklarar en sak på enkel svenska och visar ett exempel du kan härma.</p></div></div>
           <div class="step"><div class="n">2</div><div><h3>SKRIV RIKTIG PYTHON</h3><p>Du skriver koden själv och kör den direkt. Det du lär dig fungerar likadant i riktig Python.</p></div></div>
-          <div class="step"><div class="n">3</div><div><h3>FEL? FÖRSÖK IGEN</h3><p>Spelet berättar vad som gick fel och varför. Fastnar du finns ledtrådar, magikern Merlo och fen Pixi.</p></div></div>
-          <div class="step"><div class="n">4</div><div><h3>SAMLA POÄNG</h3><p>Rätt på första försöket ger mest poäng. Lås upp nya världar, möt bossar och skapa din egen hjälte.</p></div></div>
+          <div class="step"><div class="n">3</div><div><h3>FEL? FÖRSÖK IGEN</h3><p>Spelet berättar vad som gick fel och varför. Fastnar du finns ledtrådar – och kanske någon du möter på vägen som vill hjälpa dig.</p></div></div>
+          <div class="step"><div class="n">4</div><div><h3>SAMLA POÄNG</h3><p>Rätt på första försöket ger mest poäng. Skapa din egen hjälte och lås upp det som väntar bakom dörren.</p></div></div>
         </div>
-        <img class="shot" src="bilder/kod.png" width="1100" height="760" alt="Ett uppdrag om while-loopar: lektion till vänster, koden och utskriften 5 4 3 2 1 till höger, och beskedet Rätt! +100 poäng." loading="lazy">
+        <img class="shot" src="bilder/kod.png" width="1100" height="688" alt="Ett uppdrag om while-loopar: lektion till vänster, koden och utskriften 5 4 3 2 1 till höger, och beskedet Rätt! +100 poäng." loading="lazy">
       </div>
     </div>
   </section>
@@ -242,9 +248,9 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;
   <section>
     <div class="wrap">
       <h2 class="sec-title">MER FRÅN SPELET</h2>
-      <p class="sec-sub">Skapa din egen hjälte och möt Zorblax i en kodduell där det gäller att koda snabbast.</p>
+      <p class="sec-sub">Skapa din egen hjälte. Det andra… får du se när du kommer dit.</p>
       <div class="gallery">
-        <figure><img class="shot" src="bilder/duell.png" width="1076" height="520" alt="Kodduellen: uppgiften till vänster, Zorblax som skriver sin kod, och spelarens editor till höger." loading="lazy"><figcaption>Kodduellen: lös uppgiften innan Zorblax hinner skriva klart.</figcaption></figure>
+        <figure><div class="mystery shot wide"><img src="bilder/duell.png" width="1076" height="520" alt="" aria-hidden="true" loading="lazy"><span class="q">?</span></div><figcaption>Något väntar i slutet av äventyret. Mer än så säger vi inte.</figcaption></figure>
         <figure><img class="shot" src="bilder/skaparen.png" width="952" height="712" alt="Skapa din hjälte: välj kön, frisyr, hudfärg, kläder, fart och nickname." loading="lazy"><figcaption>Skapa din hjälte: kön, frisyr, hudfärg, kläder, fart och nickname.</figcaption></figure>
       </div>
     </div>
@@ -256,7 +262,7 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;
         <h2 class="sec-title">SPARA DINA FRAMSTEG</h2>
         <p class="sec-sub">Spelet fungerar utan konto. Med ett konto sparas allt i molnet, så du kan fortsätta på vilken dator som helst.</p>
         <div class="perks">
-          <div class="perk"><div class="ic">☁</div><p><b>Automatisk sparning.</b> Uppdrag, poäng, din hjälte och din raketkod sparas medan du spelar.</p></div>
+          <div class="perk"><div class="ic">☁</div><p><b>Automatisk sparning.</b> Uppdrag, poäng, din hjälte och din kod sparas medan du spelar.</p></div>
           <div class="perk"><div class="ic">💻</div><p><b>Byt dator.</b> Logga in var som helst och fortsätt där du slutade.</p></div>
           <div class="perk"><div class="ic">🔒</div><p><b>Bara du ser din sparning.</b> Ingen annan kan läsa eller ändra den.</p></div>
         </div>

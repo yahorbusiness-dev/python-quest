@@ -261,9 +261,9 @@ textarea:focus{border-color:var(--accent)}
     <div class="inner">
       <h2>THE PYTH ADVENTURE</h2>
       <canvas class="bigSprite" id="introSprite" width="12" height="15"></canvas>
-      <p>Hjälp hjälten att lära sig programmera i <b>Python</b>!</p>
+      <p>Allt börjar på en lugn äng, med din allra första rad <b>Python</b>.</p>
       <p>Gå runt med <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> och ställ dig vid datorn som blinkar. Tryck <kbd>E</kbd> för att öppna uppdraget.</p>
-      <p>31 uppdrag i fyra världar: <b>Ängen</b>, <b>Den onda skogen</b>, <b>Enhörningslandet</b> och <b style="color:#f88860">Mars</b>. Du möter <b style="color:var(--red)">BUGGDRAKEN</b>, bygger en raket och kodar mot en lurig alien.</p>
+      <p>Men längst bort på stigen står en <b style="color:var(--magic)">dörr</b> som inte har öppnats på mycket länge. Ingen vet vad som väntar på andra sidan. <b>31 uppdrag</b> ligger framför dig – bara det första går att se härifrån.</p>
       <p>Först väljer du hur din hjälte ser ut. Rätt svar ger poäng, och skriver du fel får du göra om och lär dig av misstaget.</p>
       <div id="introBtns"></div>
       <div id="cloudLine"></div>
@@ -2897,7 +2897,7 @@ function wizardTalk(){
   const n=nextIdx();
   let first;
   if(state.dragonDead&&!state.hasKey) first='Du besegrade Buggdraken! Nyckeln ligger där draken stod. Ta den och öppna den gyllene grinden i öster.';
-  else if(state.dragonDead) first='Du har nyckeln! Den gyllene grinden längst österut leder till Enhörningslandet. Där väntar en ny vän på dig.';
+  else if(state.dragonDead) first='Du har nyckeln! Den gyllene grinden längst österut... jag har själv aldrig vågat gå igenom den. Men det sägs att någon har väntat på dig där väldigt länge.';
   else if(n<0||n>=20) first='Gå till den röda datorn vid draken och avsluta striden!';
   else if(TASKS[n].boss) first='Det är dags... BUGGDRAKEN väntar vid dator 20! Tänk på detta: '+TASKS[n].tip;
   else first='Nästa dator är nummer '+(n+1)+': '+TASKS[n].concept+'. Tänk på detta: '+(TASKS[n].tip||'Läs exemplet noga innan du börjar skriva.');
@@ -3535,7 +3535,7 @@ const CSTEPS=[
   {key:'skin',  lab:'3 HUD',   title:'VÄLJ HUDFÄRG',  help:'Välj den hudfärg du vill ha.'},
   {key:'outfit',lab:'4 KLÄDER',title:'VÄLJ KLÄDER',   help:'Vad ska din hjälte ha på sig?'},
   {key:'speed', lab:'5 FART',  title:'VÄLJ HASTIGHET',help:'Hur snabbt ska hjälten gå? Du kan alltid ändra det senare med ☺ GUBBE.'},
-  {key:'name',  lab:'6 NAMN',  title:'SKRIV DITT NICKNAME',help:'Max 12 tecken. Namnet syns över din gubbe, och Merlo och Pixi kallar dig det.'}
+  {key:'name',  lab:'6 NAMN',  title:'SKRIV DITT NICKNAME',help:'Max 12 tecken. Namnet syns över din gubbe, och de du möter på vägen kallar dig det.'}
 ];
 let cStep=0;
 // liten bild av en del av gubben: rad r0 till r1 (huvud = 0–9, kläder = 8–14)
@@ -3673,7 +3673,7 @@ function startGame(reset){
   if(state.world===3){ onEnterWorld(); return; }
   const n=nextIdx();
   if(n>=0){
-    if(n>=10&&state.world===0) toast('Gå genom dörren i öster till Den onda skogen!');
+    if(n>=10&&state.world===0) toast('Dörren i öster har öppnats... Vågar du gå igenom?');
     else if(n>=20&&state.world!==2) toast(state.hasKey?'Lås upp den gyllene grinden i skogen!':'Hämta nyckeln där draken stod!');
     else toast(TASKS[n].boss?'Besegra BUGGDRAKEN vid dator 20!':(n===0?'Lycka till, '+heroName()+'! ':'')+'Gå till den blinkande datorn nummer '+(n+1)+'!');
   }
@@ -3683,7 +3683,7 @@ function showWorld1Clear(){
   showPanel('<h2>ÄNGEN ÄR KLARAD!</h2><canvas class="bigSprite" id="pSprite" width="12" height="15"></canvas>'+
     '<p class="px" style="font-size:11px">POÄNG: <span style="color:var(--accent)">'+state.score+'</span></p>'+
     '<p>Du kan nu grunderna i Python: print, variabler, input, if/else, listor, loopar och funktioner!</p>'+
-    '<p>Men längst österut på stigen har en <b style="color:var(--magic)">magisk dörr</b> öppnats... Bakom den ligger <b>Den onda skogen</b>, där magikern Merlo väntar. Och någonstans där inne lurar <b style="color:var(--red)">BUGGDRAKEN</b>.</p>'+
+    '<p>Men något har hänt. Längst österut på stigen har den gamla <b style="color:var(--magic)">dörren</b> gått upp på glänt. Bakom den är det mörkt, och ibland hörs ett dovt muller... som om något stort andas där inne.</p>'+
     '<button class="go" id="pGo">TILL DÖRREN ▶</button>',
     [['pGo',()=>closePanel('Följ stigen österut till den lila dörren!')]]);
 }
@@ -3691,7 +3691,7 @@ function showDragonPanel(){
   showPanel('<h2>BUGGDRAKEN ÄR BESEGRAD!</h2><canvas class="bigSprite" id="pSprite" width="12" height="15"></canvas>'+
     '<p class="px" style="font-size:11px">POÄNG: <span style="color:var(--accent)">'+state.score+'</span></p>'+
     '<p>Draken föll, och där den stod ligger nu den <b style="color:var(--accent)">GYLLENE NYCKELN</b> som den har vaktat!</p>'+
-    '<p>Plocka upp nyckeln. Den öppnar den gyllene grinden längst österut i skogen. Bakom grinden väntar <b style="color:var(--fairy)">Enhörningslandet</b>...</p>'+
+    '<p>Plocka upp nyckeln. Den passar i den gyllene grinden längst österut i skogen. Ingen har gått igenom den grinden på hundra år. Ingen vet vad som finns på andra sidan...</p>'+
     '<button class="go" id="pGo">HÄMTA NYCKELN ▶</button>',
     [['pGo',()=>closePanel('Gå dit draken stod och ta nyckeln!')]]);
 }
