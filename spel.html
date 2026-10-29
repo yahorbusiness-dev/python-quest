@@ -30,7 +30,16 @@ h1{font-family:'Press Start 2P',monospace;font-size:clamp(16px,3vw,26px);color:v
 .bmark{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--border)}
 #wrap{position:relative;width:min(100%,960px);aspect-ratio:4/3;border:4px solid var(--border);box-shadow:8px 8px 0 #000;background:#000;overflow:hidden}
 canvas#game{width:100%;height:100%;display:block;image-rendering:pixelated}
-#help{font-size:20px;color:var(--muted);margin-top:16px;text-align:center;line-height:1.4}
+#help{font-size:20px;color:var(--muted);margin:16px 0 20px;width:min(100%,540px)}
+#help summary{list-style:none;cursor:pointer;font-family:'Press Start 2P',monospace;font-size:10px;color:var(--accent);text-align:center;border:2px solid var(--border);background:#000;padding:10px 12px;box-shadow:3px 3px 0 #000;user-select:none}
+#help summary::-webkit-details-marker{display:none}
+#help[open] summary{border-bottom-color:transparent}
+#help summary:hover,#help summary:focus-visible{background:var(--accent);color:#000;outline:none}
+#help .keys{border:2px solid var(--border);border-top:0;background:rgba(0,0,0,.55);padding:10px 14px;line-height:1.5;animation:helpDown .18s ease-out}
+#help .keys div{display:flex;gap:12px;align-items:center}
+#help .keys span{flex:none;min-width:120px;text-align:right;white-space:nowrap}
+#help .keys .sub{font-family:'Press Start 2P',monospace;font-size:9px;color:var(--accent);margin:8px 0 2px;justify-content:center}
+@keyframes helpDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 kbd{font-family:'Press Start 2P',monospace;font-size:10px;background:#fff;color:#000;padding:3px 6px;box-shadow:2px 2px 0 #000;margin:0 2px}
 #tools{position:absolute;top:8px;left:8px;z-index:7;display:flex;gap:6px}
 .tool{margin:0;padding:6px 9px;font-size:9px;background:rgba(10,10,30,.75);color:#fff;border:2px solid #fff;box-shadow:2px 2px 0 #000}
@@ -300,7 +309,20 @@ textarea:focus{border-color:var(--accent)}
   <div class="overlay" id="panel"><div class="inner" id="panelInner"></div></div>
 </div>
 
-<div id="help"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> gå &nbsp;·&nbsp; <kbd>E</kbd> öppna uppdrag / prata &nbsp;·&nbsp; <kbd>F</kbd> fråga fen om tips<br><kbd>M</kbd> musik av/på &nbsp;·&nbsp; <kbd>N</kbd> / ▶ hoppa till nästa värld<br>I koden: <kbd>Tab</kbd> = indrag, <kbd>Ctrl</kbd>+<kbd>Enter</kbd> = kör, <kbd>Esc</kbd> = stäng</div>
+<details id="help">
+  <summary>⌨ VISA KNAPPAR</summary>
+  <div class="keys">
+    <div><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span>gå runt</div>
+    <div><span><kbd>E</kbd></span>öppna uppdrag / prata</div>
+    <div><span><kbd>F</kbd></span>be om tips (längre fram…)</div>
+    <div><span><kbd>M</kbd></span>musik av/på</div>
+    <div><span><kbd>N</kbd> / ▶</span>hoppa till nästa värld</div>
+    <div class="sub">I koden</div>
+    <div><span><kbd>Tab</kbd></span>indrag</div>
+    <div><span><kbd>Ctrl</kbd>+<kbd>Enter</kbd></span>kör koden</div>
+    <div><span><kbd>Esc</kbd></span>stäng</div>
+  </div>
+</details>
 
 <div id="duel">
   <div class="dubox">
@@ -3954,6 +3976,7 @@ function cloudInit(){
   updateCloudUI();
 }
 
+(function(){const h=document.getElementById('help');h.addEventListener('toggle',()=>{h.querySelector('summary').textContent=h.open?'⌨ DÖLJ KNAPPAR':'⌨ VISA KNAPPAR';h.querySelector('summary').blur();});})();
 document.getElementById('homeLink').innerHTML='<a href="index.html" style="color:var(--sky,#78d0ff)">← Till startsidan</a>';
 document.getElementById('backBtn').addEventListener('click',async e=>{
   if(typeof cloudTimer!=='undefined'&&cloudTimer&&typeof doCloudSave==='function'){
