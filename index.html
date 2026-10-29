@@ -6,7 +6,7 @@
 <title>The Pyth Adventure – lär dig Python i ett 8-bitarsäventyr</title>
 <meta name="description" content="Lär dig programmera Python från noll i ett gratis 8-bitarsspel på svenska. Allt börjar på en lugn äng. Vart stigen leder får du ta reda på själv.">
 <meta property="og:title" content="The Pyth Adventure">
-<meta property="og:description" content="Lär dig Python från noll i ett 8-bitarsäventyr. 31 uppdrag, en låst dörr och ett äventyr som ingen kan förutse.">
+<meta property="og:description" content="Lär dig Python från noll i ett 8-bitarsäventyr. En lugn äng, en låst dörr och ett äventyr som ingen kan förutse.">
 <meta property="og:image" content="bilder/angen.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 15' shape-rendering='crispEdges'><rect x='4' y='0' width='4' height='1' fill='%23c89820'/><rect x='1' y='1' width='10' height='6' fill='%23f8d848'/><rect x='3' y='4' width='6' height='4' fill='%23f8c8a0'/><rect x='4' y='5' width='1' height='1' fill='%23202030'/><rect x='7' y='5' width='1' height='1' fill='%23202030'/><rect x='2' y='8' width='8' height='4' fill='%233070e0'/><rect x='3' y='12' width='6' height='2' fill='%23283068'/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -140,6 +140,35 @@ input:focus,textarea:focus{border-color:var(--accent)}
 .perk p{margin:0;color:var(--muted)}
 .perk b{color:var(--text)}
 
+
+/* ---------- animationer ---------- */
+.anim .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1) var(--d,0s),transform .8s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
+.anim .reveal.in{opacity:1;transform:none}
+.anim .reveal.done{transition:transform .25s ease,box-shadow .25s ease,border-color .25s}
+.anim .hero .shot.reveal{transform:translateY(30px) rotate(4deg) scale(.96)}
+.anim .hero .shot.reveal.in{transform:rotate(1deg)}
+.anim .step.reveal{transform:translateX(-28px)}
+.anim .step.reveal.in{transform:none}
+.hero .shot.float.in{animation:float 6s ease-in-out 1.2s infinite}
+@keyframes float{0%,100%{transform:rotate(1deg) translateY(0)}50%{transform:rotate(.4deg) translateY(-10px)}}
+@media (max-width:900px){.anim .hero .shot.reveal.in{transform:none}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}}
+.btn{transition:transform .15s ease,box-shadow .15s ease,filter .15s}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--shadow)}
+.world,.stat,.step,.panel,figure .shot{transition:transform .25s ease,box-shadow .25s ease,border-color .25s,opacity .8s cubic-bezier(.2,.7,.2,1) var(--d,0s)}
+.anim .world.reveal.in:hover,.world:hover{transform:translate(-4px,-4px);box-shadow:10px 10px 0 var(--shadow)}
+.world img{transition:transform .5s ease}
+.world:not(.locked):hover img{transform:scale(1.04)}
+.world:not(.locked){overflow:hidden}
+.stat:hover{border-color:var(--accent)}
+.anim .stat.reveal.in:hover,.stat:hover{transform:translateY(-4px)}
+.stat b{transform-origin:left center}
+.stat b.pop{animation:pop .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{0%{transform:scale(.6)}100%{transform:scale(1)}}
+.nav nav a{position:relative}
+.nav nav a::after{content:'';position:absolute;left:0;right:100%;bottom:-4px;height:3px;background:var(--accent);transition:right .25s ease}
+.nav nav a:hover::after{right:0}
+.world.locked .mystery img{transition:filter .6s ease}
+.world.locked:hover .mystery img{filter:blur(14px) brightness(.45) saturate(.8)}
 footer{padding:36px 0 50px;border-top:3px solid var(--line);color:var(--muted)}
 footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;align-items:center}
 </style>
@@ -162,41 +191,41 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;
 <main id="top">
   <div class="wrap hero">
     <div>
-      <div class="kicker">GRATIS · PÅ SVENSKA · I WEBBLÄSAREN</div>
-      <h1>Lär dig <span class="hl">Python</span> i ett 8&#8209;bitars&shy;äventyr</h1>
-      <p class="lead">Allt börjar på en lugn äng, med en blinkande dator och din första <code>print()</code>. Men längst bort på stigen står en dörr som ingen har öppnat på länge. Vad som väntar bakom den? Det får du ta reda på själv – med riktig Python-kod.</p>
-      <div class="ctas">
+      <div class="kicker reveal">GRATIS · PÅ SVENSKA · I WEBBLÄSAREN</div>
+      <h1 class="reveal" style="--d:.08s">Lär dig <span class="hl">Python</span> i ett 8&#8209;bitars&shy;äventyr</h1>
+      <p class="lead reveal" style="--d:.16s">Allt börjar på en lugn äng, med en blinkande dator och din första <code>print()</code>. Men längst bort på stigen står en dörr som ingen har öppnat på länge. Vad som väntar bakom den? Det får du ta reda på själv – med riktig Python-kod.</p>
+      <div class="ctas reveal" style="--d:.24s">
         <a class="btn" href="spel.html">▶ SPELA NU</a>
         <a class="btn ghost" href="#konto" id="heroAcc">☁ LOGGA IN</a>
       </div>
     </div>
-    <img class="shot" src="bilder/angen.png" width="952" height="712" alt="Ängen: hjälten står på en stig mellan blinkande datorer med uppdrag.">
+    <img class="shot reveal float" style="--d:.2s" src="bilder/angen.png" width="952" height="712" alt="Ängen: hjälten står på en stig mellan blinkande datorer med uppdrag.">
   </div>
 
   <div class="wrap">
     <div class="stats">
-      <div class="stat"><b>31</b><span>uppdrag</span></div>
-      <div class="stat"><b>?</b><span>världar bakom dörren</span></div>
-      <div class="stat"><b>0</b><span>saker att installera</span></div>
-      <div class="stat"><b>100%</b><span>riktig Python-kod</span></div>
+      <div class="stat reveal"><b data-scramble="1">1</b><span>dörr som ingen har öppnat</span></div>
+      <div class="stat reveal" style="--d:.1s"><b data-scramble="?">?</b><span>världar bakom dörren</span></div>
+      <div class="stat reveal" style="--d:.2s"><b data-count="0" data-from="99">0</b><span>saker att installera</span></div>
+      <div class="stat reveal" style="--d:.3s"><b data-count="100" data-suffix="%">100%</b><span>riktig Python-kod</span></div>
     </div>
   </div>
 
   <section id="lar">
     <div class="wrap">
-      <h2 class="sec-title">VAD DU LÄR DIG</h2>
-      <p class="sec-sub">Du lär dig en sak i taget och använder den direkt i ett uppdrag. Den första världen kan du se här. Resten låser du upp själv – om du vågar.</p>
+      <h2 class="sec-title reveal">VAD DU LÄR DIG</h2>
+      <p class="sec-sub reveal" style="--d:.08s">Du lär dig en sak i taget och använder den direkt i ett uppdrag. Den första världen kan du se här. Resten låser du upp själv – om du vågar.</p>
       <div class="worlds">
-        <article class="world">
+        <article class="world reveal" style="--d:0.00s">
           <img src="bilder/angen.png" width="952" height="712" alt="Ängen med datorer, dammar och stigar." loading="lazy">
           <div class="body">
-            <span class="tag" style="background:var(--green)">VÄRLD 1 · UPPDRAG 1–10</span>
+            <span class="tag" style="background:var(--green)">VÄRLD 1 · ÖPPEN</span>
             <h3>Ängen</h3>
             <p>Grunderna. Få datorn att prata, räkna och fatta beslut.</p>
             <div class="chips"><span class="chip">print()</span><span class="chip">matte</span><span class="chip">variabler</span><span class="chip">input()</span><span class="chip">if / else</span><span class="chip">listor</span><span class="chip">for-loopar</span><span class="chip">def</span></div>
           </div>
         </article>
-        <article class="world locked">
+        <article class="world locked reveal" style="--d:0.12s">
           <div class="mystery"><img src="bilder/skogen.png" width="952" height="712" alt="" aria-hidden="true" loading="lazy"><span class="q">?</span></div>
           <div class="body">
             <span class="tag" style="background:var(--magic)">VÄRLD 2 · 🔒 LÅST</span>
@@ -206,7 +235,7 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;
             <p class="boss">Varning: <b>något vaktar nyckeln.</b></p>
           </div>
         </article>
-        <article class="world locked">
+        <article class="world locked reveal" style="--d:0.00s">
           <div class="mystery"><img src="bilder/enhorningar.png" width="952" height="712" alt="" aria-hidden="true" loading="lazy"><span class="q">?</span></div>
           <div class="body">
             <span class="tag" style="background:var(--fairy)">VÄRLD 3 · 🔒 LÅST</span>
@@ -215,7 +244,7 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;
             <div class="chips"><span class="chip">ordböcker</span><span class="chip">lista + ordbok</span><span class="chip">funktioner med villkor</span><span class="chip">while … and …</span></div>
           </div>
         </article>
-        <article class="world locked">
+        <article class="world locked reveal" style="--d:0.12s">
           <div class="mystery"><img src="bilder/mars.png" width="952" height="712" alt="" aria-hidden="true" loading="lazy"><span class="q">?</span></div>
           <div class="body">
             <span class="tag" style="background:var(--mars)">VÄRLD ? · 🔒 ???</span>
@@ -231,27 +260,27 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;
 
   <section id="sa-funkar-det" class="alt">
     <div class="wrap">
-      <h2 class="sec-title">SÅ FUNKAR DET</h2>
-      <p class="sec-sub">Du styr din hjälte med W A S D och går fram till en dator. Där väntar en kort lektion och ett uppdrag.</p>
+      <h2 class="sec-title reveal">SÅ FUNKAR DET</h2>
+      <p class="sec-sub reveal" style="--d:.08s">Du styr din hjälte med W A S D och går fram till en dator. Där väntar en kort lektion och ett uppdrag.</p>
       <div class="how">
         <div class="steps">
-          <div class="step"><div class="n">1</div><div><h3>LÄS OCH SE ETT EXEMPEL</h3><p>Varje uppdrag förklarar en sak på enkel svenska och visar ett exempel du kan härma.</p></div></div>
-          <div class="step"><div class="n">2</div><div><h3>SKRIV RIKTIG PYTHON</h3><p>Du skriver koden själv och kör den direkt. Det du lär dig fungerar likadant i riktig Python.</p></div></div>
-          <div class="step"><div class="n">3</div><div><h3>FEL? FÖRSÖK IGEN</h3><p>Spelet berättar vad som gick fel och varför. Fastnar du finns ledtrådar – och kanske någon du möter på vägen som vill hjälpa dig.</p></div></div>
-          <div class="step"><div class="n">4</div><div><h3>SAMLA POÄNG</h3><p>Rätt på första försöket ger mest poäng. Skapa din egen hjälte och lås upp det som väntar bakom dörren.</p></div></div>
+          <div class="step reveal" style="--d:0.0s"><div class="n">1</div><div><h3>LÄS OCH SE ETT EXEMPEL</h3><p>Varje uppdrag förklarar en sak på enkel svenska och visar ett exempel du kan härma.</p></div></div>
+          <div class="step reveal" style="--d:0.1s"><div class="n">2</div><div><h3>SKRIV RIKTIG PYTHON</h3><p>Du skriver koden själv och kör den direkt. Det du lär dig fungerar likadant i riktig Python.</p></div></div>
+          <div class="step reveal" style="--d:0.2s"><div class="n">3</div><div><h3>FEL? FÖRSÖK IGEN</h3><p>Spelet berättar vad som gick fel och varför. Fastnar du finns ledtrådar – och kanske någon du möter på vägen som vill hjälpa dig.</p></div></div>
+          <div class="step reveal" style="--d:0.3s"><div class="n">4</div><div><h3>SAMLA POÄNG</h3><p>Rätt på första försöket ger mest poäng. Skapa din egen hjälte och lås upp det som väntar bakom dörren.</p></div></div>
         </div>
-        <img class="shot" src="bilder/kod.png" width="1100" height="688" alt="Ett uppdrag om while-loopar: lektion till vänster, koden och utskriften 5 4 3 2 1 till höger, och beskedet Rätt! +100 poäng." loading="lazy">
+        <img class="shot reveal" style="--d:.15s" src="bilder/kod.png" width="1100" height="688" alt="Ett uppdrag om while-loopar: lektion till vänster, koden och utskriften 5 4 3 2 1 till höger, och beskedet Rätt! +100 poäng." loading="lazy">
       </div>
     </div>
   </section>
 
   <section>
     <div class="wrap">
-      <h2 class="sec-title">MER FRÅN SPELET</h2>
-      <p class="sec-sub">Skapa din egen hjälte. Det andra… får du se när du kommer dit.</p>
+      <h2 class="sec-title reveal">MER FRÅN SPELET</h2>
+      <p class="sec-sub reveal" style="--d:.08s">Skapa din egen hjälte. Det andra… får du se när du kommer dit.</p>
       <div class="gallery">
-        <figure><div class="mystery shot wide"><img src="bilder/duell.png" width="1076" height="520" alt="" aria-hidden="true" loading="lazy"><span class="q">?</span></div><figcaption>Något väntar i slutet av äventyret. Mer än så säger vi inte.</figcaption></figure>
-        <figure><img class="shot" src="bilder/skaparen.png" width="952" height="712" alt="Skapa din hjälte: välj kön, frisyr, hudfärg, kläder, fart och nickname." loading="lazy"><figcaption>Skapa din hjälte: kön, frisyr, hudfärg, kläder, fart och nickname.</figcaption></figure>
+        <figure class="reveal"><div class="mystery shot wide"><img src="bilder/duell.png" width="1076" height="520" alt="" aria-hidden="true" loading="lazy"><span class="q">?</span></div><figcaption>Något väntar i slutet av äventyret. Mer än så säger vi inte.</figcaption></figure>
+        <figure class="reveal" style="--d:.12s"><img class="shot" src="bilder/skaparen.png" width="952" height="712" alt="Skapa din hjälte: välj kön, frisyr, hudfärg, kläder, fart och nickname." loading="lazy"><figcaption>Skapa din hjälte: kön, frisyr, hudfärg, kläder, fart och nickname.</figcaption></figure>
       </div>
     </div>
   </section>
@@ -259,15 +288,15 @@ footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;
   <section id="konto" class="alt">
     <div class="wrap account">
       <div>
-        <h2 class="sec-title">SPARA DINA FRAMSTEG</h2>
-        <p class="sec-sub">Spelet fungerar utan konto. Med ett konto sparas allt i molnet, så du kan fortsätta på vilken dator som helst.</p>
+        <h2 class="sec-title reveal">SPARA DINA FRAMSTEG</h2>
+        <p class="sec-sub reveal" style="--d:.08s">Spelet fungerar utan konto. Med ett konto sparas allt i molnet, så du kan fortsätta på vilken dator som helst.</p>
         <div class="perks">
-          <div class="perk"><div class="ic">☁</div><p><b>Automatisk sparning.</b> Uppdrag, poäng, din hjälte och din kod sparas medan du spelar.</p></div>
-          <div class="perk"><div class="ic">💻</div><p><b>Byt dator.</b> Logga in var som helst och fortsätt där du slutade.</p></div>
-          <div class="perk"><div class="ic">🔒</div><p><b>Bara du ser din sparning.</b> Ingen annan kan läsa eller ändra den.</p></div>
+          <div class="perk reveal"><div class="ic">☁</div><p><b>Automatisk sparning.</b> Uppdrag, poäng, din hjälte och din kod sparas medan du spelar.</p></div>
+          <div class="perk reveal"><div class="ic">💻</div><p><b>Byt dator.</b> Logga in var som helst och fortsätt där du slutade.</p></div>
+          <div class="perk reveal"><div class="ic">🔒</div><p><b>Bara du ser din sparning.</b> Ingen annan kan läsa eller ändra den.</p></div>
         </div>
       </div>
-      <div class="panel" id="accPanel" aria-live="polite"></div>
+      <div class="panel reveal" style="--d:.1s" id="accPanel" aria-live="polite"></div>
     </div>
   </section>
 </main>
@@ -287,6 +316,44 @@ function paintTheme(){ themeBtn.textContent=root.dataset.theme==='dark'?'☾':'�
 themeBtn.onclick=()=>{ root.dataset.theme=root.dataset.theme==='dark'?'light':'dark'; try{localStorage.setItem('pqTheme',root.dataset.theme);}catch(e){} paintTheme(); };
 paintTheme();
 
+
+/* ---------- animationer ---------- */
+const calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
+function countTo(el,from,to,suffix,ms){
+  if(calm){ el.textContent=to+suffix; return; }
+  const t0=performance.now();
+  (function step(t){ const k=Math.min(1,(t-t0)/ms), e=1-Math.pow(1-k,3);
+    el.textContent=Math.round(from+(to-from)*e)+suffix;
+    if(k<1) requestAnimationFrame(step); else { el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); }
+  })(t0);
+}
+function scramble(el,final,ms){
+  if(calm){ el.textContent=final; return; }
+  const chars='0123456789?#@%', t0=performance.now(); let last=0;
+  (function step(t){
+    if(t-t0>=ms){ el.textContent=final; el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop'); return; }
+    if(t-last>55){ last=t; el.textContent=chars[Math.floor(Math.random()*chars.length)]; }
+    requestAnimationFrame(step);
+  })(t0);
+}
+function runStat(b){
+  if(b.dataset.done) return; b.dataset.done=1;
+  if(b.dataset.scramble!==undefined) scramble(b,b.dataset.scramble,1300);
+  else countTo(b,+(b.dataset.from||0),+b.dataset.count,b.dataset.suffix||'',1500);
+}
+if(!calm&&'IntersectionObserver' in window){
+  root.classList.add('anim');
+  const io=new IntersectionObserver(es=>es.forEach(e=>{
+    if(!e.isIntersecting) return;
+    const el=e.target; el.classList.add('in'); io.unobserve(el);
+    setTimeout(()=>el.classList.add('done'),900+(parseFloat(getComputedStyle(el).getPropertyValue('--d'))||0)*1000);
+    e.target.querySelectorAll('[data-count],[data-scramble]').forEach(b=>setTimeout(()=>runStat(b),250));
+  }),{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+} else {
+  document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in'));
+}
+
 /* ---------- logotypens gubbe ---------- */
 (function(){
   const rows=["....hhhh....","..hHHHHHHh..",".hHHHHHHHHh.",".hHHHHHHHHh.",".hHHSSSSHHh.",".hHSESSESHh.",".hHSSSSSSHh.","..hSSmmSSh..","...BBBBBB...","..BBBBBBBB..",".SBBBBBBBBS.",".S.PPPPPP.S.","...PP..PP...","...PP..PP...","..KKK..KKK.."];
@@ -298,7 +365,6 @@ paintTheme();
 /* ---------- konto med Supabase (samma projekt som spelet) ---------- */
 const SUPABASE_URL='https://jgjjbtkoguqupmszmpjn.supabase.co';
 const SUPABASE_KEY='sb_publishable_FNHdff2IcV0rFoPRCc45fw_Op8VHdNt';
-const TOTAL=31;
 const panel=document.getElementById('accPanel');
 let sb=null, user=null, recEmail='';
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -419,7 +485,7 @@ function val(id){ const el=document.getElementById(id); return el?el.value:''; }
 
 async function renderMe(){
   panel.innerHTML='<div class="me"><h3>INLOGGAD</h3><p>'+esc(user.email||'')+'</p><p id="prog">Hämtar dina framsteg...</p>'+
-    '<div class="bar"><i id="progBar"></i></div>'+
+    
     '<div class="row"><a class="btn green" href="spel.html">▶ GÅ TILL SPELET</a><button class="btn ghost small" id="newPwBtn">BYT LÖSENORD</button><button class="btn ghost small" id="outBtn">LOGGA UT</button></div></div><div class="msg" role="status"></div>';
   document.getElementById('outBtn').onclick=async()=>{ await sb.auth.signOut(); };
   document.getElementById('newPwBtn').onclick=()=>render('newpw');
@@ -429,8 +495,8 @@ async function renderMe(){
   if(!data||!data.state||!Array.isArray(data.state.done)){ p.innerHTML='Inga sparade framsteg än. Starta spelet så sparas allt automatiskt!'; return; }
   const d=data.state.done.filter(Boolean).length, nm=data.look&&data.look.name?esc(data.look.name):'Din hjälte';
   const worlds=['Ängen','Den onda skogen','Enhörningslandet','Mars'];
-  p.innerHTML='<b>'+nm+'</b> har klarat <b>'+d+' av '+TOTAL+'</b> uppdrag och har <b>'+(data.state.score||0)+'</b> poäng.'+(data.state.finished?' Hela spelet är klart!':' Just nu i: '+(worlds[data.state.world]||'Ängen')+'.');
-  requestAnimationFrame(()=>{ const bar=document.getElementById('progBar'); if(bar) bar.style.width=Math.round(d/TOTAL*100)+'%'; });
+  p.innerHTML='<b>'+nm+'</b> har klarat <b data-live="'+d+'">'+d+'</b> uppdrag och har <b data-live="'+(data.state.score||0)+'">'+(data.state.score||0)+'</b> poäng.'+(data.state.finished?' Hela spelet är klart!':' Just nu i: '+(worlds[data.state.world]||'Ängen')+'.');
+  p.querySelectorAll('[data-live]').forEach(el=>countTo(el,0,+el.dataset.live,'',1100));
   document.querySelector('#accPanel .row .btn').textContent=d>0?'▶ FORTSÄTT SPELA':'▶ BÖRJA SPELA';
 }
 

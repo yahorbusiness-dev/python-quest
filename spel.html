@@ -240,7 +240,7 @@ textarea:focus{border-color:var(--accent)}
 <div id="hud">
   <span>VÄRLD: <b id="hWorld">ÄNGEN</b></span>
   <span>POÄNG: <b id="hScore">0</b></span>
-  <span>UPPDRAG: <b id="hDone">0</b>/31</span>
+  <span>UPPDRAG: <b id="hDone">0</b></span>
   <span>HJÄLTE: <b id="hName">–</b></span>
   <span>NÄSTA: <b id="hNext">–</b></span>
 </div>
@@ -272,7 +272,7 @@ textarea:focus{border-color:var(--accent)}
       <canvas class="bigSprite" id="introSprite" width="12" height="15"></canvas>
       <p>Allt börjar på en lugn äng, med din allra första rad <b>Python</b>.</p>
       <p>Gå runt med <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> och ställ dig vid datorn som blinkar. Tryck <kbd>E</kbd> för att öppna uppdraget.</p>
-      <p>Men längst bort på stigen står en <b style="color:var(--magic)">dörr</b> som inte har öppnats på mycket länge. Ingen vet vad som väntar på andra sidan. <b>31 uppdrag</b> ligger framför dig – bara det första går att se härifrån.</p>
+      <p>Men längst bort på stigen står en <b style="color:var(--magic)">dörr</b> som inte har öppnats på mycket länge. Ingen vet vad som väntar på andra sidan. Hur långt stigen fortsätter? Det får du utforska själv.</p>
       <p>Först väljer du hur din hjälte ser ut. Rätt svar ger poäng, och skriver du fel får du göra om och lär dig av misstaget.</p>
       <div id="introBtns"></div>
       <div id="cloudLine"></div>
@@ -3733,7 +3733,7 @@ function setupIntro(){
   const box=document.getElementById('introBtns');
   const d=state.done.filter(Boolean).length;
   if(d>0){
-    box.innerHTML='<button class="go" id="contGame">FORTSÄTT ('+d+'/'+N+')</button><button class="sec" id="editLook">☺ ÄNDRA GUBBE</button><button class="sec" id="newGame">BÖRJA OM</button>';
+    box.innerHTML='<button class="go" id="contGame">FORTSÄTT ('+d+' KLARA)</button><button class="sec" id="editLook">☺ ÄNDRA GUBBE</button><button class="sec" id="newGame">BÖRJA OM</button>';
     document.getElementById('contGame').onclick=()=>startGame(false);
     document.getElementById('editLook').onclick=()=>openCreator(null);
     document.getElementById('newGame').onclick=()=>openCreator(()=>startGame(true));
@@ -3807,7 +3807,7 @@ async function cloudLoad(){
       if(data.look&&typeof data.look==='object'){ look=Object.assign(look,data.look); try{ localStorage.setItem('pqLook',JSON.stringify(look)); }catch(e){} }
       afterCloudLoad();
       setCloudStatus('SPARAT');
-      if(cloudCount>localCount) toast('Din sparning hämtades från molnet: '+cloudCount+'/'+N+' uppdrag!');
+      if(cloudCount>localCount) toast('Din sparning hämtades från molnet: '+cloudCount+' klarade uppdrag!');
       return;
     }
   }
@@ -3915,7 +3915,7 @@ function renderAccount(view){
   } else if(view==='me'){
     const d=state.done.filter(Boolean).length;
     h='<p>Inloggad som <b>'+esc((cloud.user&&cloud.user.email)||'')+'</b></p>'+
-      '<p>Dina framsteg (<b>'+d+'/'+N+'</b> uppdrag, '+state.score+' poäng), din gubbe och din kod sparas automatiskt i molnet. Logga in på en annan dator så fortsätter du där du slutade.</p>'+
+      '<p>Dina framsteg (<b>'+d+'</b> klarade uppdrag, '+state.score+' poäng), din gubbe och din kod sparas automatiskt i molnet. Logga in på en annan dator så fortsätter du där du slutade.</p>'+
       '<button class="go" id="accGo">☁ SPARA NU</button><button class="sec" id="accPwBtn">BYT LÖSENORD</button><button class="boss" id="accOut">LOGGA UT</button>';
     go=async b=>{ busy(b,true,'SPARAR...'); await doCloudSave(); busy(b,false,'☁ SPARA NU'); accMsg(cloud.status==='SPARAT'?'Sparat i molnet!':'Kunde inte spara. Försök igen.',cloud.status==='SPARAT'); };
   }
