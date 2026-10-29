@@ -19,6 +19,9 @@ body.w1{background:#0e0a16}
 body.w2{background:#211936}
 body.w3{background:#260c08}
 .px{font-family:'Press Start 2P',monospace}
+#topbar{width:min(100%,960px);display:flex;justify-content:flex-start;margin-top:8px}
+#backBtn{font-family:'Press Start 2P',monospace;font-size:clamp(8px,1.3vw,11px);color:var(--accent);text-decoration:none;border:2px solid var(--border);background:#000;padding:7px 10px;box-shadow:3px 3px 0 #000}
+#backBtn:hover,#backBtn:focus-visible{background:var(--accent);color:#000;outline:none}
 h1{font-family:'Press Start 2P',monospace;font-size:clamp(16px,3vw,26px);color:var(--accent);margin:6px 0 10px;text-shadow:3px 3px 0 #000;letter-spacing:2px}
 #hud{width:min(100%,960px);display:flex;justify-content:space-between;gap:10px;font-family:'Press Start 2P',monospace;font-size:clamp(8px,1.3vw,11px);padding:8px 2px;flex-wrap:wrap}
 #hud b{color:var(--accent)}
@@ -223,6 +226,7 @@ textarea:focus{border-color:var(--accent)}
 </head>
 <body>
 
+<div id="topbar"><a id="backBtn" href="index.html">◀ STARTSIDAN</a></div>
 <h1>THE PYTH ADVENTURE</h1>
 <div id="hud">
   <span>VÄRLD: <b id="hWorld">ÄNGEN</b></span>
@@ -3950,7 +3954,14 @@ function cloudInit(){
   updateCloudUI();
 }
 
-if(/^https?:/.test(location.protocol)) document.getElementById('homeLink').innerHTML='<a href="index.html" style="color:var(--sky,#78d0ff)">← Till startsidan</a>';
+document.getElementById('homeLink').innerHTML='<a href="index.html" style="color:var(--sky,#78d0ff)">← Till startsidan</a>';
+document.getElementById('backBtn').addEventListener('click',async e=>{
+  if(typeof cloudTimer!=='undefined'&&cloudTimer&&typeof doCloudSave==='function'){
+    e.preventDefault();
+    try{ await Promise.race([doCloudSave(),new Promise(r=>setTimeout(r,2000))]); }catch(_){}
+    location.href='index.html';
+  }
+});
 setBodyTheme();
 updateHud();
 updateMusicBtn();
