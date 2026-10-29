@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="sv" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Quest – lär dig Python i ett 8-bitarsäventyr</title>
+<meta name="description" content="Lär dig programmera Python från noll i ett gratis 8-bitarsspel på svenska. 31 uppdrag i fyra världar, direkt i webbläsaren.">
+<meta property="og:title" content="Python Quest">
+<meta property="og:description" content="Lär dig Python från noll i ett 8-bitarsäventyr. 31 uppdrag, fyra världar, en drake och en kodduell på Mars.">
+<meta property="og:image" content="bilder/angen.png">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 15' shape-rendering='crispEdges'><rect x='4' y='0' width='4' height='1' fill='%23c89820'/><rect x='1' y='1' width='10' height='6' fill='%23f8d848'/><rect x='3' y='4' width='6' height='4' fill='%23f8c8a0'/><rect x='4' y='5' width='1' height='1' fill='%23202030'/><rect x='7' y='5' width='1' height='1' fill='%23202030'/><rect x='2' y='8' width='8' height='4' fill='%233070e0'/><rect x='3' y='12' width='6' height='2' fill='%23283068'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<script>try{const t=localStorage.getItem('pqTheme');if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<style>
+:root,[data-theme=dark]{
+  --bg:#0f0f26; --bg2:#16163a; --card:#1d1d48; --card2:#262660; --line:#3a3a7a;
+  --text:#ecebff; --muted:#a3a3d6; --accent:#f8d848; --accent-ink:#1a1400;
+  --green:#58d858; --red:#f86060; --sky:#78d0ff; --magic:#c8a0ff; --fairy:#f8a8e0; --mars:#f08860;
+  --shadow:#000; --code:#0a0a1a; --codetext:#9cf09c;
+}
+[data-theme=light]{
+  --bg:#f4f1e6; --bg2:#ebe6d4; --card:#ffffff; --card2:#f6f2e4; --line:#cfc7ad;
+  --text:#1c1b33; --muted:#5a5878; --accent:#d9a400; --accent-ink:#1a1400;
+  --green:#2e9a3a; --red:#d03a3a; --sky:#1e7fc0; --magic:#7a4fd0; --fairy:#c0408a; --mars:#c4502c;
+  --shadow:#1c1b33; --code:#1c1b33; --codetext:#9cf09c;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'VT323',monospace;font-size:22px;line-height:1.25;transition:background .3s,color .3s}
+.px{font-family:'Press Start 2P',monospace}
+a{color:var(--sky)}
+img{image-rendering:pixelated;max-width:100%;display:block}
+.wrap{width:min(1140px,100%);margin:0 auto;padding:0 20px}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+
+/* knappar */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:'Press Start 2P',monospace;font-size:12px;line-height:1;padding:14px 18px;border:3px solid var(--shadow);box-shadow:4px 4px 0 var(--shadow);background:var(--accent);color:var(--accent-ink);text-decoration:none;cursor:pointer;transition:transform .08s}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--shadow)}
+.btn.ghost{background:var(--card);color:var(--text)}
+.btn.green{background:var(--green);color:#06210a}
+.btn.small{font-size:10px;padding:10px 12px}
+.btn[disabled]{opacity:.6;cursor:wait}
+
+/* sidhuvud */
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(6px);border-bottom:3px solid var(--line)}
+.nav{display:flex;align-items:center;gap:18px;height:68px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--accent);font-family:'Press Start 2P',monospace;font-size:14px;text-shadow:2px 2px 0 var(--shadow);white-space:nowrap}
+.logo canvas{width:24px;height:30px;image-rendering:pixelated}
+.nav nav{display:flex;gap:18px;margin-left:auto}
+.nav nav a{color:var(--muted);text-decoration:none;font-size:22px}
+.nav nav a:hover{color:var(--text)}
+.theme{background:var(--card);color:var(--text);border:3px solid var(--shadow);box-shadow:3px 3px 0 var(--shadow);width:44px;height:40px;font-size:20px;cursor:pointer}
+@media (max-width:760px){.nav nav{display:none}.nav .theme{margin-left:auto}.nav .btn{display:none}}
+
+/* hero */
+.hero{padding-top:64px;padding-bottom:40px;display:grid;grid-template-columns:1fr 1.05fr;gap:44px;align-items:center}
+@media (max-width:900px){.hero{grid-template-columns:1fr;padding-top:36px}}
+@media (max-width:600px){.lead{font-size:22px}body{font-size:20px}}
+.kicker{font-family:'Press Start 2P',monospace;font-size:10px;color:var(--green);letter-spacing:1px;margin-bottom:16px}
+h1{font-family:'Press Start 2P',monospace;font-size:clamp(22px,3.4vw,38px);line-height:1.4;margin:0 0 20px;text-shadow:3px 3px 0 var(--shadow)}
+h1 .hl{color:var(--accent)}
+[data-theme=light] h1,[data-theme=light] .logo{text-shadow:2px 2px 0 #ddd3b0}
+.lead{font-size:26px;color:var(--muted);margin:0 0 28px;max-width:30em}
+.ctas{display:flex;gap:14px;flex-wrap:wrap}
+.shot{border:4px solid var(--shadow);box-shadow:8px 8px 0 var(--shadow);background:#000}
+.hero .shot{transform:rotate(1deg)}
+@media (max-width:900px){.hero .shot{transform:none}}
+body{overflow-x:hidden}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:12px 0 0}
+@media (max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
+.stat{background:var(--card);border:3px solid var(--line);padding:14px 16px}
+.stat b{display:block;font-family:'Press Start 2P',monospace;font-size:20px;color:var(--accent);margin-bottom:6px}
+.stat span{color:var(--muted)}
+
+/* sektioner */
+section{padding:64px 0}
+.sec-title{font-family:'Press Start 2P',monospace;font-size:clamp(16px,2.2vw,22px);line-height:1.5;margin:0 0 10px}
+.sec-sub{color:var(--muted);margin:0 0 30px;font-size:24px;max-width:36em}
+.alt{background:var(--bg2);border-top:3px solid var(--line);border-bottom:3px solid var(--line)}
+
+/* världar */
+.worlds{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+@media (max-width:820px){.worlds{grid-template-columns:1fr}}
+.world{background:var(--card);border:3px solid var(--shadow);box-shadow:6px 6px 0 var(--shadow);display:flex;flex-direction:column}
+.world img{border-bottom:3px solid var(--shadow);aspect-ratio:4/3;object-fit:cover}
+.world .body{padding:18px 20px 20px}
+.world .tag{font-family:'Press Start 2P',monospace;font-size:9px;display:inline-block;padding:5px 8px;margin-bottom:10px;color:#000}
+.world h3{font-family:'Press Start 2P',monospace;font-size:14px;margin:0 0 8px;line-height:1.5}
+.world p{margin:0 0 12px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:'Courier New',monospace;font-size:15px;background:var(--code);color:var(--codetext);padding:3px 8px;border:2px solid var(--shadow)}
+.boss{margin-top:12px;font-size:20px}
+.boss b{color:var(--red)}
+
+/* så funkar det */
+.how{display:grid;grid-template-columns:1fr 1.1fr;gap:36px;align-items:start}
+@media (max-width:900px){.how{grid-template-columns:1fr}}
+.steps{display:grid;gap:16px}
+.step{display:flex;gap:16px;background:var(--card);border:3px solid var(--line);padding:16px 18px}
+.step .n{flex:none;width:44px;height:44px;display:grid;place-items:center;font-family:'Press Start 2P',monospace;font-size:14px;background:var(--accent);color:var(--accent-ink);border:3px solid var(--shadow)}
+.step h3{margin:0 0 4px;font-family:'Press Start 2P',monospace;font-size:11px;line-height:1.6}
+.step p{margin:0;color:var(--muted)}
+
+/* galleri */
+.gallery{display:grid;grid-template-columns:1.2fr 1fr;gap:22px}
+@media (max-width:820px){.gallery{grid-template-columns:1fr}}
+figure{margin:0}
+figcaption{color:var(--muted);margin-top:10px}
+
+/* konto */
+.account{display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:start}
+@media (max-width:900px){.account{grid-template-columns:1fr}}
+.panel{background:var(--card);border:3px solid var(--shadow);box-shadow:8px 8px 0 var(--shadow);padding:24px}
+.tabs{display:flex;gap:6px;margin-bottom:18px}
+.tabs button{flex:1;font-family:'Press Start 2P',monospace;font-size:10px;padding:12px 6px;border:3px solid var(--shadow);background:var(--card2);color:var(--muted);cursor:pointer}
+.tabs button.cur{background:var(--accent);color:var(--accent-ink)}
+label{display:block;font-family:'Press Start 2P',monospace;font-size:9px;color:var(--muted);margin:4px 0 6px}
+input,textarea{display:block;width:100%;font-family:'Courier New',monospace;font-size:18px;padding:12px;margin-bottom:14px;background:var(--code);color:#fff;border:3px solid var(--line);outline:none}
+input:focus,textarea:focus{border-color:var(--accent)}
+.linkbtn{background:none;border:none;color:var(--sky);font:inherit;text-decoration:underline;cursor:pointer;padding:0;margin-top:14px}
+.msg{display:none;margin-top:14px;padding:10px 12px;border:3px solid;line-height:1.2}
+.msg.ok{display:block;border-color:var(--green);background:color-mix(in srgb,var(--green) 14%,transparent)}
+.msg.bad{display:block;border-color:var(--red);background:color-mix(in srgb,var(--red) 14%,transparent)}
+.me h3{font-family:'Press Start 2P',monospace;font-size:13px;margin:0 0 6px;line-height:1.5}
+.bar{height:16px;background:var(--code);border:3px solid var(--shadow);margin:14px 0 6px}
+.bar i{display:block;height:100%;width:0;background:var(--green);transition:width .6s}
+.me .row{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+.perks{display:grid;gap:14px}
+.perk{display:flex;gap:14px;align-items:flex-start}
+.perk .ic{flex:none;font-size:30px;line-height:1}
+.perk p{margin:0;color:var(--muted)}
+.perk b{color:var(--text)}
+
+footer{padding:36px 0 50px;border-top:3px solid var(--line);color:var(--muted)}
+footer .wrap{display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top"><canvas id="logoSprite" width="12" height="15"></canvas>PYTHON QUEST</a>
+    <nav>
+      <a href="#lar">Vad du lär dig</a>
+      <a href="#sa-funkar-det">Så funkar det</a>
+      <a href="#konto">Konto</a>
+    </nav>
+    <button class="theme" id="themeBtn" aria-label="Byt mellan mörkt och ljust läge">☾</button>
+    <a class="btn small" href="spel.html">▶ SPELA</a>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <div class="kicker">GRATIS · PÅ SVENSKA · I WEBBLÄSAREN</div>
+      <h1>Lär dig <span class="hl">Python</span> i ett 8&#8209;bitars&shy;äventyr</h1>
+      <p class="lead">Börja från noll med din första <code>print()</code> och sluta med att besegra en drake, bygga en raket och vinna en kodduell mot en alien på Mars. Allt med riktig Python-kod.</p>
+      <div class="ctas">
+        <a class="btn" href="spel.html">▶ SPELA NU</a>
+        <a class="btn ghost" href="#konto" id="heroAcc">☁ LOGGA IN</a>
+      </div>
+    </div>
+    <img class="shot" src="bilder/angen.png" width="952" height="712" alt="Ängen: hjälten står på en stig mellan blinkande datorer med uppdrag.">
+  </div>
+
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><b>31</b><span>uppdrag</span></div>
+      <div class="stat"><b>4</b><span>världar att utforska</span></div>
+      <div class="stat"><b>0</b><span>saker att installera</span></div>
+      <div class="stat"><b>100%</b><span>riktig Python-kod</span></div>
+    </div>
+  </div>
+
+  <section id="lar">
+    <div class="wrap">
+      <h2 class="sec-title">VAD DU LÄR DIG</h2>
+      <p class="sec-sub">Varje värld bygger på den förra. Du lär dig en sak i taget och använder den direkt i ett uppdrag.</p>
+      <div class="worlds">
+        <article class="world">
+          <img src="bilder/angen.png" width="952" height="712" alt="Ängen med datorer, dammar och stigar." loading="lazy">
+          <div class="body">
+            <span class="tag" style="background:var(--green)">VÄRLD 1 · UPPDRAG 1–10</span>
+            <h3>Ängen</h3>
+            <p>Grunderna. Få datorn att prata, räkna och fatta beslut.</p>
+            <div class="chips"><span class="chip">print()</span><span class="chip">matte</span><span class="chip">variabler</span><span class="chip">input()</span><span class="chip">if / else</span><span class="chip">listor</span><span class="chip">for-loopar</span><span class="chip">def</span></div>
+          </div>
+        </article>
+        <article class="world">
+          <img src="bilder/skogen.png" width="952" height="712" alt="Den onda skogen med magikern Merlo och den röda Buggdraken." loading="lazy">
+          <div class="body">
+            <span class="tag" style="background:var(--magic)">VÄRLD 2 · UPPDRAG 11–20</span>
+            <h3>Den onda skogen</h3>
+            <p>Magikern Merlo lär dig loopar och funktioner som skickar tillbaka svar.</p>
+            <div class="chips"><span class="chip">while</span><span class="chip">elif</span><span class="chip">and / or</span><span class="chip">append()</span><span class="chip">len()</span><span class="chip">parametrar</span><span class="chip">return</span><span class="chip">f-strängar</span></div>
+            <p class="boss">Boss: <b>Buggdraken</b>, som besegras med en while-loop.</p>
+          </div>
+        </article>
+        <article class="world">
+          <img src="bilder/enhorningar.png" width="952" height="712" alt="Enhörningslandet med betande enhörningar och en raket som byggs på startplattan." loading="lazy">
+          <div class="body">
+            <span class="tag" style="background:var(--fairy)">VÄRLD 3 · UPPDRAG 21–25</span>
+            <h3>Enhörningslandet</h3>
+            <p>Med fen Pixi skriver du ett riktigt program på över 20 rader i fem steg, och bygger en raket som flyger.</p>
+            <div class="chips"><span class="chip">ordböcker</span><span class="chip">lista + ordbok</span><span class="chip">funktion med villkor</span><span class="chip">while … and …</span></div>
+          </div>
+        </article>
+        <article class="world">
+          <img src="bilder/mars.png" width="952" height="712" alt="Mars med tre gröna aliens, ett rymdskepp och kodlåsta gömställen." loading="lazy">
+          <div class="body">
+            <span class="tag" style="background:var(--mars)">VÄRLD 4 · UPPDRAG 26–31</span>
+            <h3>Mars</h3>
+            <p>Hjälp tre gröna aliens att hitta sin stjärnkristall bakom kodlåsta gömställen.</p>
+            <div class="chips"><span class="chip">% (rest)</span><span class="chip">in</span><span class="chip">range med steg</span><span class="chip">"#" * i</span><span class="chip">sum / min / max</span></div>
+            <p class="boss">Final: en <b>kodduell på tid</b> mot den lila tjuven Zorblax.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="sa-funkar-det" class="alt">
+    <div class="wrap">
+      <h2 class="sec-title">SÅ FUNKAR DET</h2>
+      <p class="sec-sub">Du styr din hjälte med W A S D och går fram till en dator. Där väntar en kort lektion och ett uppdrag.</p>
+      <div class="how">
+        <div class="steps">
+          <div class="step"><div class="n">1</div><div><h3>LÄS OCH SE ETT EXEMPEL</h3><p>Varje uppdrag förklarar en sak på enkel svenska och visar ett exempel du kan härma.</p></div></div>
+          <div class="step"><div class="n">2</div><div><h3>SKRIV RIKTIG PYTHON</h3><p>Du skriver koden själv och kör den direkt. Det du lär dig fungerar likadant i riktig Python.</p></div></div>
+          <div class="step"><div class="n">3</div><div><h3>FEL? FÖRSÖK IGEN</h3><p>Spelet berättar vad som gick fel och varför. Fastnar du finns ledtrådar, magikern Merlo och fen Pixi.</p></div></div>
+          <div class="step"><div class="n">4</div><div><h3>SAMLA POÄNG</h3><p>Rätt på första försöket ger mest poäng. Lås upp nya världar, möt bossar och skapa din egen hjälte.</p></div></div>
+        </div>
+        <img class="shot" src="bilder/kod.png" width="1100" height="760" alt="Ett uppdrag om while-loopar: lektion till vänster, koden och utskriften 5 4 3 2 1 till höger, och beskedet Rätt! +100 poäng." loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2 class="sec-title">MER FRÅN SPELET</h2>
+      <p class="sec-sub">Skapa din egen hjälte och möt Zorblax i en kodduell där det gäller att koda snabbast.</p>
+      <div class="gallery">
+        <figure><img class="shot" src="bilder/duell.png" width="1076" height="520" alt="Kodduellen: uppgiften till vänster, Zorblax som skriver sin kod, och spelarens editor till höger." loading="lazy"><figcaption>Kodduellen: lös uppgiften innan Zorblax hinner skriva klart.</figcaption></figure>
+        <figure><img class="shot" src="bilder/skaparen.png" width="952" height="712" alt="Skapa din hjälte: välj kön, frisyr, hudfärg, kläder, fart och nickname." loading="lazy"><figcaption>Skapa din hjälte: kön, frisyr, hudfärg, kläder, fart och nickname.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="konto" class="alt">
+    <div class="wrap account">
+      <div>
+        <h2 class="sec-title">SPARA DINA FRAMSTEG</h2>
+        <p class="sec-sub">Spelet fungerar utan konto. Med ett konto sparas allt i molnet, så du kan fortsätta på vilken dator som helst.</p>
+        <div class="perks">
+          <div class="perk"><div class="ic">☁</div><p><b>Automatisk sparning.</b> Uppdrag, poäng, din hjälte och din raketkod sparas medan du spelar.</p></div>
+          <div class="perk"><div class="ic">💻</div><p><b>Byt dator.</b> Logga in var som helst och fortsätt där du slutade.</p></div>
+          <div class="perk"><div class="ic">🔒</div><p><b>Bara du ser din sparning.</b> Ingen annan kan läsa eller ändra den.</p></div>
+        </div>
+      </div>
+      <div class="panel" id="accPanel" aria-live="polite"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="px" style="font-size:10px">PYTHON QUEST</span>
+    <span>Ett gratis spel för att lära sig programmera. <a href="spel.html">Spela nu</a></span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+/* ---------- ljust / mörkt läge ---------- */
+const root=document.documentElement, themeBtn=document.getElementById('themeBtn');
+function paintTheme(){ themeBtn.textContent=root.dataset.theme==='dark'?'☾':'☀'; themeBtn.setAttribute('aria-pressed',root.dataset.theme==='dark'); }
+themeBtn.onclick=()=>{ root.dataset.theme=root.dataset.theme==='dark'?'light':'dark'; try{localStorage.setItem('pqTheme',root.dataset.theme);}catch(e){} paintTheme(); };
+paintTheme();
+
+/* ---------- logotypens gubbe ---------- */
+(function(){
+  const rows=["....hhhh....","..hHHHHHHh..",".hHHHHHHHHh.",".hHHHHHHHHh.",".hHHSSSSHHh.",".hHSESSESHh.",".hHSSSSSSHh.","..hSSmmSSh..","...BBBBBB...","..BBBBBBBB..",".SBBBBBBBBS.",".S.PPPPPP.S.","...PP..PP...","...PP..PP...","..KKK..KKK.."];
+  const pal={H:'#f8d848',h:'#c89820',S:'#f8c8a0',E:'#202030',m:'#d06868',B:'#3070e0',P:'#283068',K:'#5a3218'};
+  const c=document.getElementById('logoSprite').getContext('2d');
+  rows.forEach((r,y)=>[...r].forEach((ch,x)=>{ if(ch!=='.'){ c.fillStyle=pal[ch]; c.fillRect(x,y,1,1); } }));
+})();
+
+/* ---------- konto med Supabase (samma projekt som spelet) ---------- */
+const SUPABASE_URL='https://jgjjbtkoguqupmszmpjn.supabase.co';
+const SUPABASE_KEY='sb_publishable_FNHdff2IcV0rFoPRCc45fw_Op8VHdNt';
+const TOTAL=31;
+const panel=document.getElementById('accPanel');
+let sb=null, user=null, recEmail='';
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const here=()=>location.origin+location.pathname;
+
+function errText(e){
+  const c=(e&&(e.code||e.error_code))||'', m=((e&&e.message)||'').toLowerCase();
+  if(c==='otp_expired'||m.includes('expired')) return 'Länken har gått ut eller redan använts. Skicka en ny länk.';
+  if(c==='invalid_credentials'||m.includes('invalid login')) return 'Fel e-post eller lösenord.';
+  if(c==='email_not_confirmed'||m.includes('not confirmed')) return 'Du behöver bekräfta din e-post först. Kolla inkorgen (och skräpposten) och klicka på länken.';
+  if(c==='user_already_exists'||c==='email_exists'||m.includes('already registered')) return 'Det finns redan ett konto med den e-posten. Logga in i stället!';
+  if(c==='weak_password'||m.includes('password should be')) return 'Lösenordet är för svagt. Använd minst 6 tecken.';
+  if(c==='email_address_invalid'||m.includes('invalid format')) return 'E-postadressen ser inte rätt ut.';
+  if(c==='email_address_not_authorized') return 'Spelets e-posttjänst kan inte skicka mejl till den adressen än. Försök igen senare.';
+  if(c==='over_email_send_rate_limit'||c==='over_request_rate_limit'||m.includes('rate limit')) return 'För många försök just nu. Vänta en stund och försök igen.';
+  if(c==='same_password') return 'Det nya lösenordet måste vara ett annat än det gamla.';
+  if(m.includes('fetch')||m.includes('network')) return 'Kunde inte nå servern. Är du ansluten till internet?';
+  return 'Något gick fel: '+((e&&e.message)||'okänt fel');
+}
+function say(txt,ok){ const m=panel.querySelector('.msg'); m.className='msg '+(ok?'ok':'bad'); m.innerHTML=txt; }
+function busy(b,on,label){ b.disabled=on; b.textContent=label; }
+function inp(id,label,type,val,ac){ return '<label for="'+id+'">'+label+'</label><input id="'+id+'" type="'+type+'" autocomplete="'+ac+'" value="'+esc(val||'')+'">'; }
+
+function render(view){
+  let h='', go=null, goLabel='';
+  const tabs=v=>'<div class="tabs" role="tablist"><button role="tab" data-v="login" class="'+(v==='login'?'cur':'')+'">LOGGA IN</button><button role="tab" data-v="signup" class="'+(v==='signup'?'cur':'')+'">SKAPA KONTO</button></div>';
+  if(!sb){
+    panel.innerHTML='<p>Inloggningen kunde inte laddas. Kontrollera internetanslutningen och ladda om sidan. Du kan fortfarande spela utan konto.</p><a class="btn" href="spel.html">▶ SPELA UTAN KONTO</a>';
+    return;
+  }
+  if(view==='login'){
+    goLabel='LOGGA IN ▶';
+    h=tabs('login')+inp('em','E-POST','email',recEmail,'email')+inp('pw','LÖSENORD','password','','current-password')+
+      '<button class="btn green" id="go">'+goLabel+'</button><br><button class="linkbtn" data-v="forgot">Glömt lösenordet?</button>';
+    go=async b=>{
+      const em=val('em').trim(), pw=val('pw');
+      if(!em||!pw) return say('Fyll i både e-post och lösenord.');
+      busy(b,true,'LOGGAR IN...');
+      const {error}=await sb.auth.signInWithPassword({email:em,password:pw});
+      busy(b,false,goLabel);
+      if(error) return say(errText(error));
+      recEmail=em;
+    };
+  } else if(view==='signup'){
+    goLabel='SKAPA KONTO ▶';
+    h=tabs('signup')+inp('em','E-POST','email',recEmail,'email')+inp('pw','LÖSENORD (MINST 6 TECKEN)','password','','new-password')+inp('pw2','SKRIV LÖSENORDET IGEN','password','','new-password')+
+      '<button class="btn green" id="go">'+goLabel+'</button>';
+    go=async b=>{
+      const em=val('em').trim(), pw=val('pw'), pw2=val('pw2');
+      if(!em||!pw) return say('Fyll i e-post och lösenord.');
+      if(pw.length<6) return say('Lösenordet måste vara minst 6 tecken.');
+      if(pw!==pw2) return say('Lösenorden är inte likadana. Skriv dem igen.');
+      busy(b,true,'SKAPAR...');
+      const {data,error}=await sb.auth.signUp({email:em,password:pw,options:{emailRedirectTo:here()+'#konto'}});
+      busy(b,false,goLabel);
+      if(error) return say(errText(error));
+      recEmail=em;
+      if(data&&data.session) return;
+      if(data&&data.user&&Array.isArray(data.user.identities)&&data.user.identities.length===0) return say('Det finns redan ett konto med den e-posten. Logga in i stället!');
+      render('login');
+      say('Kontot är skapat! Öppna mejlet vi skickade och klicka på länken för att bekräfta det. Sedan loggar du in här.',true);
+    };
+  } else if(view==='forgot'){
+    goLabel='SKICKA LÄNK ▶';
+    h='<h3 class="px" style="font-size:12px;line-height:1.6;margin:0 0 10px">GLÖMT LÖSENORDET?</h3><p>Skriv din e-post så skickar vi en länk där du väljer ett nytt lösenord.</p>'+
+      inp('em','E-POST','email',recEmail,'email')+'<button class="btn green" id="go">'+goLabel+'</button><br><button class="linkbtn" data-v="login">◀ Tillbaka till inloggning</button>';
+    go=async b=>{
+      const em=val('em').trim();
+      if(!em) return say('Skriv din e-post.');
+      busy(b,true,'SKICKAR...');
+      const {error}=await sb.auth.resetPasswordForEmail(em,{redirectTo:here()+'#konto'});
+      busy(b,false,goLabel);
+      if(error) return say(errText(error));
+      recEmail=em; render('sent');
+    };
+  } else if(view==='sent'){
+    goLabel='FORTSÄTT ▶';
+    h='<h3 class="px" style="font-size:12px;line-height:1.6;margin:0 0 10px">KOLLA DIN E-POST</h3>'+
+      '<p>Vi har skickat en länk till <b>'+esc(recEmail)+'</b>. Klicka på den så kommer du tillbaka hit och kan välja ett nytt lösenord. Kolla även skräpposten.</p>'+
+      '<p style="color:var(--muted)">Kom du inte tillbaka hit? Kopiera länken i mejlet, eller adressen på sidan som öppnades, och klistra in den här:</p>'+
+      '<label for="link">LÄNKEN FRÅN MEJLET</label><textarea id="link" rows="3" spellcheck="false"></textarea>'+
+      '<button class="btn green" id="go">'+goLabel+'</button><br><button class="linkbtn" data-v="forgot">Skicka en ny länk</button>';
+    go=async b=>{
+      const txt=val('link').trim();
+      if(!txt) return say('Klistra in länken från mejlet.');
+      busy(b,true,'KONTROLLERAR...');
+      const err=await useLink(txt);
+      busy(b,false,goLabel);
+      if(err) return say(err);
+      render('newpw');
+    };
+  } else if(view==='newpw'){
+    goLabel='SPARA LÖSENORD ▶';
+    h='<h3 class="px" style="font-size:12px;line-height:1.6;margin:0 0 10px">VÄLJ NYTT LÖSENORD</h3><p>För <b>'+esc((user&&user.email)||recEmail)+'</b></p>'+
+      inp('pw','NYTT LÖSENORD (MINST 6 TECKEN)','password','','new-password')+inp('pw2','SKRIV DET IGEN','password','','new-password')+
+      '<button class="btn green" id="go">'+goLabel+'</button>';
+    go=async b=>{
+      const pw=val('pw'), pw2=val('pw2');
+      if(pw.length<6) return say('Lösenordet måste vara minst 6 tecken.');
+      if(pw!==pw2) return say('Lösenorden är inte likadana.');
+      busy(b,true,'SPARAR...');
+      const {error}=await sb.auth.updateUser({password:pw});
+      busy(b,false,goLabel);
+      if(error) return say(errText(error));
+      history.replaceState(null,'',location.pathname+'#konto');
+      await renderMe(); say('Klart! Ditt nya lösenord är sparat.',true);
+    };
+  }
+  panel.innerHTML=h+'<div class="msg" role="status"></div>';
+  panel.querySelectorAll('[data-v]').forEach(el=>el.onclick=()=>{ const em=document.getElementById('em'); if(em) recEmail=em.value.trim(); render(el.dataset.v); });
+  const gb=document.getElementById('go');
+  if(gb&&go){
+    gb.onclick=()=>go(gb);
+    panel.querySelectorAll('input').forEach(i=>i.addEventListener('keydown',e=>{ if(e.key==='Enter'&&!gb.disabled){ e.preventDefault(); go(gb); } }));
+  }
+}
+function val(id){ const el=document.getElementById(id); return el?el.value:''; }
+
+async function renderMe(){
+  panel.innerHTML='<div class="me"><h3>INLOGGAD</h3><p>'+esc(user.email||'')+'</p><p id="prog">Hämtar dina framsteg...</p>'+
+    '<div class="bar"><i id="progBar"></i></div>'+
+    '<div class="row"><a class="btn green" href="spel.html">▶ GÅ TILL SPELET</a><button class="btn ghost small" id="newPwBtn">BYT LÖSENORD</button><button class="btn ghost small" id="outBtn">LOGGA UT</button></div></div><div class="msg" role="status"></div>';
+  document.getElementById('outBtn').onclick=async()=>{ await sb.auth.signOut(); };
+  document.getElementById('newPwBtn').onclick=()=>render('newpw');
+  const {data,error}=await sb.from('progress').select('state,look').eq('user_id',user.id).maybeSingle();
+  const p=document.getElementById('prog'); if(!p) return;
+  if(error){ p.textContent='Kunde inte hämta dina framsteg just nu.'; return; }
+  if(!data||!data.state||!Array.isArray(data.state.done)){ p.innerHTML='Inga sparade framsteg än. Starta spelet så sparas allt automatiskt!'; return; }
+  const d=data.state.done.filter(Boolean).length, nm=data.look&&data.look.name?esc(data.look.name):'Din hjälte';
+  const worlds=['Ängen','Den onda skogen','Enhörningslandet','Mars'];
+  p.innerHTML='<b>'+nm+'</b> har klarat <b>'+d+' av '+TOTAL+'</b> uppdrag och har <b>'+(data.state.score||0)+'</b> poäng.'+(data.state.finished?' Hela spelet är klart!':' Just nu i: '+(worlds[data.state.world]||'Ängen')+'.');
+  requestAnimationFrame(()=>{ const bar=document.getElementById('progBar'); if(bar) bar.style.width=Math.round(d/TOTAL*100)+'%'; });
+  document.querySelector('#accPanel .row .btn').textContent=d>0?'▶ FORTSÄTT SPELA':'▶ BÖRJA SPELA';
+}
+
+async function useLink(txt){
+  try{
+    const hash=txt.includes('#')?txt.slice(txt.indexOf('#')+1):'';
+    const hp=new URLSearchParams(hash);
+    if(hp.get('error_code')||hp.get('error')) return errText({code:hp.get('error_code'),message:hp.get('error_description')||hp.get('error')});
+    if(hp.get('access_token')&&hp.get('refresh_token')){
+      const {error}=await sb.auth.setSession({access_token:hp.get('access_token'),refresh_token:hp.get('refresh_token')});
+      return error?errText(error):null;
+    }
+    let q=null; try{ q=new URL(txt).searchParams; }catch(e){}
+    const tok=q&&(q.get('token')||q.get('token_hash'));
+    if(tok){ const {error}=await sb.auth.verifyOtp({token_hash:tok,type:'recovery'}); return error?errText(error):null; }
+    return 'Det där ser inte ut som länken från mejlet. Kopiera hela länken och försök igen.';
+  }catch(e){ return errText(e); }
+}
+
+function setHeroButton(){
+  const a=document.getElementById('heroAcc');
+  a.textContent=user?'☁ MITT KONTO':'☁ LOGGA IN';
+}
+
+(function init(){
+  // fel från en mejllänk som gått ut visas i adressfältet
+  const hp=new URLSearchParams(location.hash.slice(1));
+  const linkErr=hp.get('error_code')||hp.get('error');
+  try{
+    if(window.supabase) sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true,flowType:'implicit'}});
+  }catch(e){ sb=null; }
+  if(!sb){ render(); return; }
+  let recovering=false, keepView=!!linkErr;
+  sb.auth.onAuthStateChange((ev,session)=>{
+    user=session?session.user:null; setHeroButton();
+    if(!user&&keepView){ keepView=false; return; }
+    if(ev==='PASSWORD_RECOVERY'){
+      recovering=true;
+      setTimeout(()=>{ render('newpw'); document.getElementById('konto').scrollIntoView(); },0);
+      return;
+    }
+    if(recovering&&ev!=='SIGNED_OUT') return;
+    setTimeout(()=>{ if(user) renderMe(); else render('login'); },0);
+  });
+  if(linkErr){
+    render('forgot'); say(errText({code:hp.get('error_code'),message:hp.get('error_description')||linkErr}));
+    history.replaceState(null,'',location.pathname+'#konto');
+    document.getElementById('konto').scrollIntoView();
+  }
+})();
+</script>
+</body>
+</html>
